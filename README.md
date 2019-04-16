@@ -1,13 +1,11 @@
 [![Build Status](https://travis-ci.com/EduardVavrynchuk/HotelBooking.svg?branch=master)](https://travis-ci.com/EduardVavrynchuk/HotelBooking)
 
-# Getting Started
+# Hotel booking
 
-### Reference Documentation
+## Reference Documentation
 For further reference, please consider the following sections:
 
 * [Project documentation](https://maven.apache.org/guides/index.html)
-
-# Hotel booking
 
 ## What tools did I use?
 
