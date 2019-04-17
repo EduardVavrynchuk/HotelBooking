@@ -5,7 +5,7 @@
 ## Reference Documentation
 For further reference, please consider the following sections:
 
-* [Project documentation](https://maven.apache.org/guides/index.html)
+* [Project documentation](https://hotelbooking2.docs.apiary.io/#)
 
 ## What tools did I use?
 
@@ -20,7 +20,7 @@ The following tools I did used:
     Junit
     
 
-## How to run?
+## How to run app?
 
 You should have Java, Maven, PostgreSQL. After installation, you need to clone this repository:
 
