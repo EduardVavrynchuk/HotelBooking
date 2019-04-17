@@ -24,7 +24,7 @@ The following tools I did used:
 
 You should have Java, Maven, PostgreSQL. After installation, you need to clone this repository:
 
-    git@github.com:EduardVavrynchuk/
+    git@github.com:EduardVavrynchuk/HotelBooking.git
 
 You need create DB and user, also grant user access on DB, commands:
 
