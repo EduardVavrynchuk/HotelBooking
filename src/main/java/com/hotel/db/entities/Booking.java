@@ -1,5 +1,7 @@
 package com.hotel.db.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -12,13 +14,14 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Room room;
 
-    @OneToMany
+    @ManyToMany
     private Set<AdditionalOptions> additionalOptions;
 
     @Temporal(TemporalType.DATE)
