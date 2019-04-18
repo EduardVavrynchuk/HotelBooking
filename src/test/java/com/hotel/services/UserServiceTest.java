@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 
 import static com.hotel.TestObjectGenerator.*;
 import static org.junit.Assert.*;
@@ -146,7 +147,7 @@ public class UserServiceTest {
         assertNotNull(user);
 
         // expect null if user id is not exist
-        assertNull(userService.getBookingById(user.getId() + 1));
+        assertNull(userService.getBookingById(user.getId() + new Random().nextLong()));
     }
 
     @Test
