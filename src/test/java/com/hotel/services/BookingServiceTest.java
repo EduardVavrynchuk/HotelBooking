@@ -5,7 +5,10 @@ import com.hotel.db.entities.Booking;
 import com.hotel.db.entities.CategoryRoom;
 import com.hotel.db.entities.Room;
 import com.hotel.db.entities.User;
-import com.hotel.db.repositories.*;
+import com.hotel.db.repositories.BookingRepository;
+import com.hotel.db.repositories.CategoryRoomRepository;
+import com.hotel.db.repositories.RoomRepository;
+import com.hotel.db.repositories.UserRepository;
 import com.hotel.webapp.transferobject.BookingDTO;
 import org.junit.After;
 import org.junit.Before;
@@ -20,14 +23,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Random;
 
 import static com.hotel.TestObjectGenerator.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
@@ -111,12 +110,5 @@ public class BookingServiceTest {
 
     }
 
-    private BookingDTO generateBookingDTO(long userId, long roomId) {
 
-        return new BookingDTO()
-                .setUserId(userId)
-                .setRoomId(roomId)
-                .setStartDate(new Date().getTime())
-                .setEndDate(java.sql.Date.valueOf(LocalDate.now().plusDays(1)).getTime());
-    }
 }

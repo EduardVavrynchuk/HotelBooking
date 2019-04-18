@@ -3,7 +3,7 @@ package com.hotel.webapp.controllers;
 import com.hotel.db.entities.Booking;
 import com.hotel.db.entities.User;
 import com.hotel.services.UserService;
-import com.hotel.webapp.transferobject.UserBody;
+import com.hotel.webapp.transferobject.UserBodyDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class UserController {
 
     /**
      * Allows to create a new user
-     * @param userBody - object with one parameter - username
+     * @param userBodyDTO - object with one parameter - username
      * @param errors - validation on NULL and empty for field - username
      * @return
      *      - Http status 200 with User entity, if user was created success
@@ -39,16 +39,16 @@ public class UserController {
      *      - Htt status 409, if user is already exist
      */
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserBody userBody, Errors errors) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserBodyDTO userBodyDTO, Errors errors) {
         if (errors.hasFieldErrors("username")) {
             logger.warn("Field username is NULL or empty");
             return new ResponseEntity<>("Username field not be null or empty", HttpStatus.BAD_REQUEST);
         }
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
 
         if (user == null) {
-            logger.warn("User with username: " + userBody.getUsername() + " is already exist");
+            logger.warn("User with username: " + userBodyDTO.getUsername() + " is already exist");
             return new ResponseEntity<>("User is already exist", HttpStatus.CONFLICT);
         }
 

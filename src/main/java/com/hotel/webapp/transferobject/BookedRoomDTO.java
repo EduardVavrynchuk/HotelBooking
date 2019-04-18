@@ -4,13 +4,13 @@ import com.hotel.db.entities.Booking;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-public class BookedRoom extends Booking {
+public class BookedRoomDTO extends Booking {
 
     private int daysAmount;
     private Double fullPrice;
 
 
-    public BookedRoom(Booking booking) {
+    public BookedRoomDTO(Booking booking) {
         this.setId(booking.getId());
         this.setRoom(booking.getRoom());
         this.setAdditionalOptions(booking.getAdditionalOptions());

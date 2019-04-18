@@ -4,8 +4,8 @@ import com.hotel.db.entities.Booking;
 import com.hotel.db.entities.User;
 import com.hotel.db.repositories.BookingRepository;
 import com.hotel.db.repositories.UserRepository;
-import com.hotel.webapp.transferobject.BookedRoom;
-import com.hotel.webapp.transferobject.UserBody;
+import com.hotel.webapp.transferobject.BookedRoomDTO;
+import com.hotel.webapp.transferobject.UserBodyDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +28,18 @@ public class UserService {
         this.bookingRepository = bookingRepository;
     }
 
-    public User createUser(UserBody userBody) {
-        if (userIsExist(userBody)) {
-            logger.info("User with username: " + userBody.getUsername() + " was created!");
-            return userRepository.save(new User(userBody.getUsername()));
+    public User createUser(UserBodyDTO userBodyDTO) {
+        if (userIsExist(userBodyDTO)) {
+            logger.info("User with username: " + userBodyDTO.getUsername() + " was created!");
+            return userRepository.save(new User(userBodyDTO.getUsername()));
         }
 
-        logger.info("User with username:" + userBody.getUsername() + " is already exists");
+        logger.info("User with username:" + userBodyDTO.getUsername() + " is already exists");
         return null;
     }
 
-    public BookedRoom getFullPriceForBookedRoom(Booking booking) {
-        return new BookedRoom(booking);
+    public BookedRoomDTO getFullPriceForBookedRoom(Booking booking) {
+        return new BookedRoomDTO(booking);
     }
 
     public Page<Booking> getUserBooking(User user, Pageable pageable) {
@@ -54,8 +54,8 @@ public class UserService {
         return bookingRepository.findById(booking_id).orElse(null);
     }
 
-    private boolean userIsExist(UserBody userBody) {
-        return userRepository.findByUsername(userBody.getUsername()) == null;
+    private boolean userIsExist(UserBodyDTO userBodyDTO) {
+        return userRepository.findByUsername(userBodyDTO.getUsername()) == null;
     }
 
 }

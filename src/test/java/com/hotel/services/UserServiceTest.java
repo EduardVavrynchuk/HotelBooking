@@ -3,8 +3,8 @@ package com.hotel.services;
 import com.hotel.TestConfiguration;
 import com.hotel.db.entities.*;
 import com.hotel.db.repositories.*;
-import com.hotel.webapp.transferobject.BookedRoom;
-import com.hotel.webapp.transferobject.UserBody;
+import com.hotel.webapp.transferobject.BookedRoomDTO;
+import com.hotel.webapp.transferobject.UserBodyDTO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,26 +61,26 @@ public class UserServiceTest {
     public void createUser() {
         long userAmount = userRepository.count();
 
-        UserBody userBody = new UserBody()
+        UserBodyDTO userBodyDTO = new UserBodyDTO()
                 .setUsername("someUsername" + System.currentTimeMillis());
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
         assertNotNull(user);
 
         assertEquals(userAmount + 1, userRepository.count());
 
         // expect null, duplicate username
-        user = userService.createUser(userBody);
+        user = userService.createUser(userBodyDTO);
         assertNull(user);
 
     }
 
     @Test
     public void getFullPriceForBookedRoom() {
-        UserBody userBody = new UserBody()
+        UserBodyDTO userBodyDTO = new UserBodyDTO()
                 .setUsername("someUsername" + System.currentTimeMillis());
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
         assertNotNull(user);
 
         CategoryRoom categoryRoom = generateCategoryRoom(categoryRoomRepository);
@@ -90,10 +90,10 @@ public class UserServiceTest {
 
         assertNotNull(booking);
 
-        BookedRoom bookedRoom = userService.getFullPriceForBookedRoom(booking);
-        double price = bookedRoom.getDaysAmount() * booking.getRoom().getPrice() + additionalOptions.getPrice() * bookedRoom.getDaysAmount();
+        BookedRoomDTO bookedRoomDTO = userService.getFullPriceForBookedRoom(booking);
+        double price = bookedRoomDTO.getDaysAmount() * booking.getRoom().getPrice() + additionalOptions.getPrice() * bookedRoomDTO.getDaysAmount();
 
-        assertEquals(String.format("%.2f", price), bookedRoom.getFullPrice());
+        assertEquals(String.format("%.2f", price), bookedRoomDTO.getFullPrice());
 
     }
 
@@ -102,10 +102,10 @@ public class UserServiceTest {
         int totalBookedRoomsForUser = 4;
         long amountBookedRooms = bookingRepository.count();
 
-        UserBody userBody = new UserBody()
+        UserBodyDTO userBodyDTO = new UserBodyDTO()
                 .setUsername("someUsername" + System.currentTimeMillis());
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
         assertNotNull(user);
 
         for (int i = 0; i < totalBookedRoomsForUser; i++) {
@@ -135,10 +135,10 @@ public class UserServiceTest {
     public void getUserById() {
         long userAmount = userRepository.count();
 
-        UserBody userBody = new UserBody()
+        UserBodyDTO userBodyDTO = new UserBodyDTO()
                 .setUsername("someUsername" + System.currentTimeMillis());
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
         assertNotNull(user);
 
         assertEquals(userAmount + 1, userRepository.count());
@@ -154,10 +154,10 @@ public class UserServiceTest {
     public void getBookingById() {
         long amountBookedRooms = bookingRepository.count();
 
-        UserBody userBody = new UserBody()
+        UserBodyDTO userBodyDTO = new UserBodyDTO()
                 .setUsername("someUsername" + System.currentTimeMillis());
 
-        User user = userService.createUser(userBody);
+        User user = userService.createUser(userBodyDTO);
         assertNotNull(user);
 
         CategoryRoom categoryRoom = generateCategoryRoom(categoryRoomRepository);

@@ -2,8 +2,10 @@ package com.hotel;
 
 import com.hotel.db.entities.*;
 import com.hotel.db.repositories.*;
+import com.hotel.webapp.transferobject.BookingDTO;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Random;
 import java.util.Set;
 
@@ -46,5 +48,14 @@ public class TestObjectGenerator {
                 .setPrice(new Random().nextDouble());
 
         return additionalOptionsRepository.save(additionalOptions);
+    }
+
+    public static BookingDTO generateBookingDTO(long userId, long roomId) {
+
+        return new BookingDTO()
+                .setUserId(userId)
+                .setRoomId(roomId)
+                .setStartDate(new Date().getTime())
+                .setEndDate(java.sql.Date.valueOf(LocalDate.now().plusDays(1)).getTime());
     }
 }

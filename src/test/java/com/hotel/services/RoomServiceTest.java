@@ -5,7 +5,10 @@ import com.hotel.db.entities.Booking;
 import com.hotel.db.entities.CategoryRoom;
 import com.hotel.db.entities.Room;
 import com.hotel.db.entities.User;
-import com.hotel.db.repositories.*;
+import com.hotel.db.repositories.CategoryRoomRepository;
+import com.hotel.db.repositories.RoomRepository;
+import com.hotel.db.repositories.UserRepository;
+import com.hotel.webapp.transferobject.BookingDTO;
 import com.hotel.webapp.transferobject.CategoryRoomDTO;
 import org.junit.After;
 import org.junit.Before;
@@ -17,13 +20,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static com.hotel.TestObjectGenerator.generateCategoryRoom;
-import static com.hotel.TestObjectGenerator.generateRoom;
-import static com.hotel.TestObjectGenerator.generateUser;
+import static com.hotel.TestObjectGenerator.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
@@ -35,19 +39,16 @@ public class RoomServiceTest {
     private UserRepository userRepository;
 
     @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
     private RoomRepository roomRepository;
 
     @Autowired
     private CategoryRoomRepository categoryRoomRepository;
 
     @Autowired
-    private AdditionalOptionsRepository additionalOptionsRepository;
+    private RoomService roomService;
 
     @Autowired
-    private RoomService roomService;
+    private BookingService bookingService;
 
     @Before
     public void setUp() throws Exception {
@@ -59,9 +60,28 @@ public class RoomServiceTest {
 
     @Test
     public void getAvailableRooms() {
+        Date startDate = new Date();
+        Date endDate = java.sql.Date.valueOf(LocalDate.now().plusDays(1));
+
         User user = generateUser(userRepository);
 
-        List<Room> generatedRooms = generateRooms();
+        CategoryRoom categoryRoom = generateCategoryRoom(categoryRoomRepository);
+        Room room = generateRoom(categoryRoom, roomRepository);
+
+        BookingDTO bookingDTO = generateBookingDTO(user.getId(), room.getId());
+
+        List<Room> availableRooms = roomService.getAvailableRooms(startDate, endDate);
+        assertNotNull(availableRooms);
+
+        int amountAvailableRooms = availableRooms.size();
+
+        Booking booking = bookingService.bookRoom(bookingDTO);
+        assertNotNull(booking);
+
+        availableRooms = roomService.getAvailableRooms(startDate, endDate);
+        assertNotNull(availableRooms);
+
+        assertEquals(amountAvailableRooms - 1, availableRooms.size());
 
     }
 
@@ -98,19 +118,4 @@ public class RoomServiceTest {
 
     }
 
-    private List<Room> generateRooms() {
-        return null;
-    }
-
-    private List<Booking> generateBooking() {
-        return null;
-        /*
-        1	2019-04-03	2019-04-01	2	1
-        2	2019-04-05	2019-04-03	3	2
-        3	2019-04-07	2019-04-05	4	3
-        4	2019-04-23	2019-04-21	5	2
-        5	2019-04-25	2019-04-24	6	5
-
-         */
-    }
 }
