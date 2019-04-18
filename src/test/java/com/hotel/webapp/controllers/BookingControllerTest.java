@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = TestConfiguration.class)
 @TestPropertySource("classpath:test.properties")
 @SpringBootTest
-public class UserControllerTest {
+public class BookingControllerTest {
 
     @Before
     public void setUp() throws Exception {
@@ -27,15 +27,10 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser() {
-
+    public void getAllBooking() {
     }
 
     @Test
-    public void getPriceForUserBookedRoom() {
-    }
-
-    @Test
-    public void getUserBookedRooms() {
+    public void createNewBooking() {
     }
 }

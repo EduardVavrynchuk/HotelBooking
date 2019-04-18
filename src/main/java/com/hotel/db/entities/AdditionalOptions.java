@@ -31,16 +31,18 @@ public class AdditionalOptions {
         return name;
     }
 
-    public void setName(String name) {
+    public AdditionalOptions setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public AdditionalOptions setPrice(Double price) {
         this.price = price;
+        return this;
     }
 
 }

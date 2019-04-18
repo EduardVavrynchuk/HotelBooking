@@ -34,23 +34,26 @@ public class Room {
         return number;
     }
 
-    public void setNumber(int number) {
+    public Room setNumber(int number) {
         this.number = number;
+        return this;
     }
 
     public CategoryRoom getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryRoom category) {
+    public Room setCategory(CategoryRoom category) {
         this.category = category;
+        return this;
     }
 
     public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public Room setPrice(Double price) {
         this.price = price;
+        return this;
     }
 }

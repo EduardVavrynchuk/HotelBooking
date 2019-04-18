@@ -47,7 +47,7 @@ public class BookingController {
      * @param errors - field validation
      * @return
      *      - Http status 400, if User or Room was not found, or room is not available
-     *      - Htts status 200 with created booking, if success
+     *      - Http status 200 with created booking, if success
      */
     @PostMapping
     public ResponseEntity<?> createNewBooking(@Valid @RequestBody BookingDTO bookingDTO, Errors errors) {

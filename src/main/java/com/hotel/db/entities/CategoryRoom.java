@@ -28,7 +28,8 @@ public class CategoryRoom {
         return name;
     }
 
-    public void setName(String name) {
+    public CategoryRoom setName(String name) {
         this.name = name;
+        return this;
     }
 }
