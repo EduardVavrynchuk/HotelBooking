@@ -15,6 +15,7 @@ The following tools I did used:
     Maven (3.6.0)
     H2 (1.4.199)
     SpringBoot (2.1.4.RELEASE)
+    Hibernate (5.3.9.Final)
     
     PostgreSQL (42.2.2)
 
