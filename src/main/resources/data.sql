@@ -32,10 +32,13 @@ INSERT INTO room (id, number, price, category_id) VALUES
 (8, 108, 1000, 1),
 (9, 109, 1300, 2);
 
-INSERT INTO booking (id, end_date, start_date, room_id, user_id) VALUES
-(1, '2019-04-03', '2019-04-01', 2, 1),
-(2, '2019-04-05', '2019-04-03', 3, 2),
-(3, '2019-04-07', '2019-04-05', 4, 3);
+INSERT INTO booking (end_date, start_date, room_id, user_id) VALUES
+('2019-04-03', '2019-04-01', 2, 1),
+('2019-04-05', '2019-04-03', 3, 2),
+('2019-04-07', '2019-04-05', 4, 3),
+('2019-04-23', '2019-04-21', 5, 2),
+('2019-04-25', '2019-04-24', 6, 5);
+
 
 INSERT INTO booking_additional_options (booking_id, additional_options_id) VALUES
 (1, 1),

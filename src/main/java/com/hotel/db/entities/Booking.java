@@ -11,7 +11,12 @@ public class Booking {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="booking_seq")
+    @SequenceGenerator(
+            name="booking_seq",
+            sequenceName="booking_sequence",
+            allocationSize=1
+    )
     private Long id;
 
     @ManyToOne
@@ -45,39 +50,44 @@ public class Booking {
         return user;
     }
 
-    public void setUser(User user) {
+    public Booking setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public Room getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public Booking setRoom(Room room) {
         this.room = room;
+        return this;
     }
 
     public Set<AdditionalOptions> getAdditionalOptions() {
         return additionalOptions;
     }
 
-    public void setAdditionalOptions(Set<AdditionalOptions> additionalOptions) {
+    public Booking setAdditionalOptions(Set<AdditionalOptions> additionalOptions) {
         this.additionalOptions = additionalOptions;
+        return this;
     }
 
     public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public Booking setStartDate(Date startDate) {
         this.startDate = startDate;
+        return this;
     }
 
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public Booking setEndDate(Date endDate) {
         this.endDate = endDate;
+        return this;
     }
 }

@@ -9,9 +9,9 @@ import com.hotel.webapp.transferobject.UserBody;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -34,6 +34,7 @@ public class UserService {
             return userRepository.save(new User(userBody.getUsername()));
         }
 
+        logger.info("User with username:" + userBody.getUsername() + " is already exists");
         return null;
     }
 
@@ -41,8 +42,8 @@ public class UserService {
         return new BookedRoom(booking);
     }
 
-    public Set<Booking> getUserBooking(User user) {
-        return bookingRepository.findAllByUser(user);
+    public Page<Booking> getUserBooking(User user, Pageable pageable) {
+        return bookingRepository.findAllByUser(user, pageable);
     }
 
     public User getUserById(Long user_id) {

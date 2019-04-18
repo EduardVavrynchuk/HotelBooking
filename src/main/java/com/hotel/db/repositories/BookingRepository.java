@@ -9,13 +9,12 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
     Page<Booking> findAll(Pageable pageable);
 
-    Set<Booking> findAllByUser(User user);
+    Page<Booking> findAllByUser(User user, Pageable pageable);
 
     List<Booking> findAllByRoomAndStartDateGreaterThan(Room room, Date now);
 

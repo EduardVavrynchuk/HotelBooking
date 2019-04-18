@@ -7,6 +7,8 @@ import com.hotel.webapp.transferobject.UserBody;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -39,59 +41,66 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserBody userBody, Errors errors) {
         if (errors.hasFieldErrors("username")) {
-            logger.info("Username is null");
+            logger.warn("Field username is NULL or empty");
             return new ResponseEntity<>("Username field not be null or empty", HttpStatus.BAD_REQUEST);
         }
 
         User user = userService.createUser(userBody);
 
         if (user == null) {
-            logger.info("User with username: " + userBody.getUsername() + " is already exist");
-            return new ResponseEntity<>("Username is already exist", HttpStatus.CONFLICT);
+            logger.warn("User with username: " + userBody.getUsername() + " is already exist");
+            return new ResponseEntity<>("User is already exist", HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     /**
-     * Allow to get all user booked rooms
-     * @param user_id - id of user for which need to get booked rooms
-     * @return
-     *      - Http status 400, if user was not found by user_id
-     *      - Http status 200 with list of all booked rooms, if success
-     */
-    @GetMapping(value = "/{user_id}")
-    public ResponseEntity<?> getUserBookings(@PathVariable("user_id") Long user_id) {
-        User user = userService.getUserById(user_id);
-
-        if (user == null) {
-            logger.info("User with id: " + user_id + " not found");
-            return new ResponseEntity<>("User with id: " + user_id + " not found", HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(userService.getUserBooking(user), HttpStatus.OK);
-    }
-
-    /**
-     * Allow to get full price for booked room
+     * Allow for user to get a full price for specified booked room
      * @param booking_id - id booking
      * @return
      *      - Http status 400, if booked number was not found
      *      - Http status 200 with object which contain amount days and price, if success
      */
     @GetMapping(value = "/booked/{booking_id}")
-    public ResponseEntity<?> getPriceForBookedRoom(
+    public ResponseEntity<?> getPriceForUserBookedRoom(
             @PathVariable("booking_id") Long booking_id
     ) {
-
         Booking booking = userService.getBookingById(booking_id);
 
         if (booking == null) {
-            logger.info("Booking with id: " + booking_id + " not found");
+            logger.warn("Booking with id: " + booking_id + " not found");
             return new ResponseEntity<>("Booking with id: " + booking_id + " not found", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(userService.getFullPriceForBookedRoom(booking), HttpStatus.OK);
+    }
+
+    /**
+     * Allow to get all booked rooms for specified user
+     * @param user_id - id of user for which need to get booked rooms
+     * @param size - amount booked rooms on page
+     * @param page - number page
+     * @return
+     *      - Http status 400, if user was not found by user_id
+     *      - Http status 200 with pages of all booked rooms, if success
+     */
+    @GetMapping(value = "/{user_id}")
+    public ResponseEntity<?> getUserBookedRooms(
+            @PathVariable("user_id") Long user_id,
+            @RequestParam("size") int size,
+            @RequestParam("page") int page
+    ) {
+        User user = userService.getUserById(user_id);
+
+        if (user == null) {
+            logger.warn("User with id: " + user_id + " not found");
+            return new ResponseEntity<>("User with id: " + user_id + " not found", HttpStatus.BAD_REQUEST);
+        }
+
+        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC, "id"));
+
+        return new ResponseEntity<>(userService.getUserBooking(user, PageRequest.of(page, size, sort)), HttpStatus.OK);
     }
 
 }

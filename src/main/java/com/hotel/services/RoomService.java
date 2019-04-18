@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import static com.hotel.utils.ConditionValidator.availabilityCheck;
 
 @Service
 public class RoomService {
@@ -39,32 +40,19 @@ public class RoomService {
 
         List<Room> availableRoom = new ArrayList<>();
 
-        Date now = new Date();
         roomList.forEach(room -> {
 
             List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThan(
                     room,
-                    now
+                    new Date()
             );
 
             if (bookingList.isEmpty()) {
                 availableRoom.add(room);
             } else {
-                AtomicBoolean available = new AtomicBoolean(true);
-
-                bookingList.forEach(booking -> {
-                    if (startDate.before(booking.getStartDate())) {
-                        if (!endDate.before(booking.getStartDate())) {
-                            available.set(false);
-                        }
-                    } else if (!startDate.after(booking.getEndDate())) {
-                        available.set(false);
-                    }
-                });
-
-                if (available.get())
+                if (availabilityCheck(startDate, endDate, bookingList)) {
                     availableRoom.add(room);
-
+                }
             }
 
         });
@@ -79,20 +67,21 @@ public class RoomService {
         List<CategoryRoomDTO> categoryRoomList = new ArrayList<>();
 
         categoryRooms.forEach(categoryRoom -> {
-            CategoryRoomDTO categoryRoom1 = new CategoryRoomDTO();
-            categoryRoom1.setCategoryName(categoryRoom.getName());
-            categoryRoom1.setRooms(new ArrayList<>());
+            CategoryRoomDTO categoryObject = new CategoryRoomDTO();
+            categoryObject.setCategoryName(categoryRoom.getName());
+            categoryObject.setRooms(new ArrayList<>());
 
             rooms.forEach(room -> {
-                if (room.getId().equals(categoryRoom.getId())) {
-                    categoryRoom1.getRooms().add(ObjectGenerator.generateRoomDTO(room));
+                if (room.getCategory().getId().equals(categoryRoom.getId())) {
+                    categoryObject.getRooms().add(ObjectGenerator.generateRoomDTO(room));
                 }
             });
 
-            categoryRoomList.add(categoryRoom1);
+            categoryRoomList.add(categoryObject);
         });
 
         return categoryRoomList;
 
     }
+
 }

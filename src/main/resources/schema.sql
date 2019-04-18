@@ -6,8 +6,10 @@ drop table if exists category_room;
 drop table if exists hotel_user;
 
 drop sequence if exists hotel_sequence;
+drop sequence if exists booking_sequence;
 
 create sequence if not exists hotel_sequence;
+create sequence if not exists booking_sequence;
 
 create table if not exists additional_options
 (
@@ -48,7 +50,7 @@ create table if not exists room
 
 create table if not exists booking
 (
-	id bigint not null
+	id bigint not null default nextval ('booking_sequence')
 		constraint booking_pkey
 			primary key,
 	end_date date,
