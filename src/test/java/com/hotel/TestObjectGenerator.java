@@ -1,17 +1,17 @@
 package com.hotel;
 
 import com.hotel.db.entities.*;
-import com.hotel.db.repositories.AdditionalOptionsRepository;
-import com.hotel.db.repositories.BookingRepository;
-import com.hotel.db.repositories.CategoryRoomRepository;
-import com.hotel.db.repositories.RoomRepository;
+import com.hotel.db.repositories.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Random;
 import java.util.Set;
 
 public class TestObjectGenerator {
+
+    public static User generateUser(UserRepository userRepository) {
+        return userRepository.save(new User("someUsername" + System.currentTimeMillis()));
+    }
 
     public static CategoryRoom generateCategoryRoom(CategoryRoomRepository categoryRoomRepository) {
         CategoryRoom categoryRoom = new CategoryRoom()
@@ -33,8 +33,8 @@ public class TestObjectGenerator {
         Booking booking = new Booking()
                 .setUser(user)
                 .setRoom(room)
-                .setStartDate(new Date())
-                .setEndDate(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
+                .setStartDate(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
+                .setEndDate(java.sql.Date.valueOf(LocalDate.now().plusDays(2)))
                 .setAdditionalOptions(additionalOptions);
 
         return bookingRepository.save(booking);

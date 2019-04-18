@@ -16,6 +16,6 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
 
     Page<Booking> findAllByUser(User user, Pageable pageable);
 
-    List<Booking> findAllByRoomAndStartDateGreaterThan(Room room, Date now);
+    List<Booking> findAllByRoomAndStartDateGreaterThanEqual(Room room, Date now);
 
 }

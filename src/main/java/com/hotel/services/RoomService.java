@@ -42,7 +42,7 @@ public class RoomService {
 
         roomList.forEach(room -> {
 
-            List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThan(
+            List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThanEqual(
                     room,
                     new Date()
             );

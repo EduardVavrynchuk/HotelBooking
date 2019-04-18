@@ -60,7 +60,7 @@ public class BookingService {
             return null;
         }
 
-        List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThan(
+        List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThanEqual(
                 room,
                 new Date()
         );
@@ -83,9 +83,10 @@ public class BookingService {
     private Booking createBooking(User user, Room room, BookingDTO bookingDTO) {
         Set<AdditionalOptions> additionalOptions = new HashSet<>();
 
-        bookingDTO.getAdditionalOptions().forEach(additionalOptionsDTO -> {
-            additionalOptionsRepository.findById(additionalOptionsDTO.getId()).ifPresent(additionalOptions::add);
-        });
+        if (bookingDTO.getAdditionalOptions() != null)
+            bookingDTO.getAdditionalOptions().forEach(additionalOptionsDTO -> {
+                additionalOptionsRepository.findById(additionalOptionsDTO.getId()).ifPresent(additionalOptions::add);
+            });
 
         Booking booking = new Booking()
                 .setUser(user)

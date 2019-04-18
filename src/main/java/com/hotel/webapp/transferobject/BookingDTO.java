@@ -26,39 +26,44 @@ public class BookingDTO {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public BookingDTO setUserId(long userId) {
         this.userId = userId;
+        return this;
     }
 
     public long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(long roomId) {
+    public BookingDTO setRoomId(long roomId) {
         this.roomId = roomId;
+        return this;
     }
 
     public long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(long startDate) {
+    public BookingDTO setStartDate(long startDate) {
         this.startDate = startDate;
+        return this;
     }
 
     public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(long endDate) {
+    public BookingDTO setEndDate(long endDate) {
         this.endDate = endDate;
+        return this;
     }
 
     public List<AdditionalOptionsDTO> getAdditionalOptions() {
         return additionalOptions;
     }
 
-    public void setAdditionalOptions(List<AdditionalOptionsDTO> additionalOptions) {
+    public BookingDTO setAdditionalOptions(List<AdditionalOptionsDTO> additionalOptions) {
         this.additionalOptions = additionalOptions;
+        return this;
     }
 }
