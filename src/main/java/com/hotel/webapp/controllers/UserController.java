@@ -48,7 +48,6 @@ public class UserController {
         User user = userService.createUser(userBodyDTO);
 
         if (user == null) {
-            logger.warn("User with username: " + userBodyDTO.getUsername() + " is already exist");
             return new ResponseEntity<>("User is already exist", HttpStatus.CONFLICT);
         }
 

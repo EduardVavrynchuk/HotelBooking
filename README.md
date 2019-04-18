@@ -13,26 +13,16 @@ The following tools I did used:
 
     Java 8 (1.8.0_192)
     Maven (3.6.0)
-    PostgreSQL (42.2.2)
+    H2 (1.4.199)
     SpringBoot (2.1.4.RELEASE)
-    Hibernate ()
-    H2 ()
-    Junit
     
+    PostgreSQL (42.2.2)
 
 ## How to run app?
 
-You should have Java, Maven, PostgreSQL. After installation, you need to clone this repository:
+You should have Java and Maven. After installation, you need to clone this repository:
 
     git@github.com:EduardVavrynchuk/HotelBooking.git
-
-You need create DB and user, also grant user access on DB, commands:
-
-    1. sudo -u postgres createdb hotel_db;
-    2. sudo -u postgres createuser hotel_user;
-    3. sudo -u postgres psql hotel_db;
-    4. ALTER USER "hotel_user" WITH PASSWORD 'qwAS123zx';
-    5. GRANT ALL PRIVILEGES ON DATABASE hotel_db TO hotel_user;
     
 ## And run the program:
 
@@ -41,3 +31,15 @@ You need create DB and user, also grant user access on DB, commands:
 ## How to run test?
 
     mvn test
+
+## Also you can run project with PostgreSQL DB:
+
+You should have PostgreSQL, After installation you need create DB and user, also grant user access on DB, commands
+
+    1. sudo -u postgres createdb hotel_db;
+    2. sudo -u postgres createuser hotel_user;
+    3. sudo -u postgres psql hotel_db;
+    4. ALTER USER "hotel_user" WITH PASSWORD 'qwAS123zx';
+    5. GRANT ALL PRIVILEGES ON DATABASE hotel_db TO hotel_user;
+
+After that you need to uncomment Postgres Configuration in src/main/resources/application.properties and comment H2 Configuration
