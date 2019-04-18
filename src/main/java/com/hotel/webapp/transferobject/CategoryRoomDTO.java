@@ -11,15 +11,17 @@ public class CategoryRoomDTO {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
+    public CategoryRoomDTO setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+        return this;
     }
 
     public List<RoomDTO> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<RoomDTO> rooms) {
+    public CategoryRoomDTO setRooms(List<RoomDTO> rooms) {
         this.rooms = rooms;
+        return this;
     }
 }

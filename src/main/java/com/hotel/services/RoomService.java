@@ -37,11 +37,9 @@ public class RoomService {
 
     public List<Room> getAvailableRooms(Date startDate, Date endDate) {
         List<Room> roomList = roomRepository.findAll();
-
         List<Room> availableRoom = new ArrayList<>();
 
         roomList.forEach(room -> {
-
             List<Booking> bookingList = bookingRepository.findAllByRoomAndStartDateGreaterThanEqual(
                     room,
                     new Date()
@@ -67,9 +65,9 @@ public class RoomService {
         List<CategoryRoomDTO> categoryRoomList = new ArrayList<>();
 
         categoryRooms.forEach(categoryRoom -> {
-            CategoryRoomDTO categoryObject = new CategoryRoomDTO();
-            categoryObject.setCategoryName(categoryRoom.getName());
-            categoryObject.setRooms(new ArrayList<>());
+            CategoryRoomDTO categoryObject = new CategoryRoomDTO()
+                    .setCategoryName(categoryRoom.getName())
+                    .setRooms(new ArrayList<>());
 
             rooms.forEach(room -> {
                 if (room.getCategory().getId().equals(categoryRoom.getId())) {
